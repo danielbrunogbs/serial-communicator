@@ -28,6 +28,9 @@ if(len(devices) > 0):
 
 		cmd = input('>')
 
+		if(cmd == 'quit'):
+			break
+
 		message = helper.command(cmd)
 
 		print('>> {}'.format(message))
@@ -39,13 +42,20 @@ if(len(devices) > 0):
 
 		while True:
 
-			received = dev.recv(2049)
+			try:
 
-			response += received
+				received = dev.recv(2049)
 
-			search = response.find(b'\x17')
+				response += received
 
-			if(search >= 0):
+				search = response.find(b'\x17')
+
+				if(search >= 0):
+					break
+
+			except:
+
+				print('Time out!')
 				break
 
 		print(response)
