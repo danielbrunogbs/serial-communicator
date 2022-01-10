@@ -1,65 +1,48 @@
-import bluetooth
 import helper
+import serial
 
-#Pega todos os dispositivos
-devices = bluetooth.discover_devices(lookup_names=True)
-key = 0
+#Portal serial
 
-#Lista todos os dispositivos encontrados
-for address, name in devices:
+com = input('Informa a porta serial: ')
 
-	print('{}: ({}) {}'.format(key, address, name))
+#Listando portas seriais
 
-	key = key + 1
+ser = serial.Serial(com, 9600, timeout=0)
 
-#Verifica se encontrou algum dispositivo
-if(len(devices) > 0):
+while True:
 
-	deviceId = int(input('Insira o valor do dispositivo: '))
-	device = devices[deviceId]
+	cmd = input('>')
 
-	host = device[0]
-	port = 3
+	if(cmd == 'quit'):
+		break
 
-	dev = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-	dev.connect((host, port))
+	message = helper.command(cmd)
+
+	ser.write(message)
+
+	response = bytes()
 
 	while True:
 
-		cmd = input('>')
+		try:
 
-		if(cmd == 'quit'):
-			break
+			received = ser.read(2049)
 
-		message = helper.command(cmd)
+			response += received
 
-		print('>> {}'.format(message))
+			search = response.find(b'\x17')
 
-		dev.send(message)
-		dev.settimeout(10)
+			if(search >= 0):
 
-		response = bytes()
+				print('{:3}'.format(response))
 
-		while True:
+				print('<< {}'.format(response))
 
-			try:
-
-				received = dev.recv(2049)
-
-				response += received
-
-				search = response.find(b'\x17')
-
-				if(search >= 0):
-					break
-
-			except:
-
-				print('Time out!')
 				break
 
-		print(response)
+		except:
 
-else:
+			print('Algo deu errado!')
+			break
 
-	print('Nenhum dispositivo encontrado!')
+ser.close()
