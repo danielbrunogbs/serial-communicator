@@ -1,6 +1,24 @@
 import helper
 import serial
 
+#Objeto dos Comandos
+
+from app import OPN
+
+#Comandos
+
+commands = [
+	[
+		"A",
+		"OPN",
+		OPN
+	]
+]
+
+print(commands[0][2].run())
+
+exit()
+
 #Portal serial
 
 com = input('Informa a porta serial: ')
