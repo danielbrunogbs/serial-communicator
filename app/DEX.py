@@ -18,6 +18,6 @@ class DEX(Command):
 
 		display = display.replace('\\n', '\x0d')
 
-		text = '{}{:03d}{:03d}{}'.format(self.label, len(display) + 3, len(display), display)
+		display = '{:03d}{}'.format(len(display), display)
 
-		return message(text)
+		return super().send(self.label, len(display), display)

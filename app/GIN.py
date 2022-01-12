@@ -1,11 +1,11 @@
 from app.Command import Command
 from app.Helpers.app import message
 
-class DSP(Command):
+class GIN(Command):
 
 	def __init__(self):
 
-		self.label = 'DSP'
+		self.label = 'GIN'
 		self.abecs = False
 
 		super().__init__(self)
@@ -14,7 +14,7 @@ class DSP(Command):
 
 		super().displayCommand()
 
-		display = input('DIGITE O TEXTO: ')
+		display = input('ESCOLHA 01 OU 02: ')
 
 		text = '{}{:03d}{}'.format(self.label, len(display), display)
 

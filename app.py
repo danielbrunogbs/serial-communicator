@@ -6,13 +6,15 @@ from app.Helpers.app import config
 from app.OPN import OPN
 from app.DSP import DSP
 from app.DEX import DEX
+from app.GIN import GIN
 
 #Comandos
 
 commands = [
 	OPN(),
 	DSP(),
-	DEX()
+	DEX(),
+	GIN()
 ]
 
 #Conexão com a porta serial
@@ -40,9 +42,7 @@ try:
 		print('=   ╚═════╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝╚═════╝   =')
 		print('==========================================================================')
 
-		print('\n')
-		print('Selecione o comando que deseja executar.')
-		print('\n')
+		print('\nSelecione o comando que deseja executar.\n')
 
 		for index, command in enumerate(commands, start = 1):
 

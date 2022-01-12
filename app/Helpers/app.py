@@ -20,6 +20,10 @@ def crc(string):
 
 def message(string):
 
+	print(string)
+
+	exit()
+
 	SYN = '\x16' #START
 	ETB = '\x17' #END
 
@@ -29,7 +33,7 @@ def message(string):
 	#string = string.encode('ascii').hex()
 
 	MSG = SYN + string + ETB
-	MSG = bytes.fromhex(MSG.hex())
+	MSG = bytes.fromhex(MSG.encode('ascii').hex())
 
 	return MSG + CRC
 
