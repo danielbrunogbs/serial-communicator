@@ -2,6 +2,8 @@ class Command():
 
 	def __init__(self):
 
-		#Nada
+		return
 
-		print('Entrou aqui na classe base')
+	def crcMessage(self, message):
+
+		print(message)

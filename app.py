@@ -3,46 +3,57 @@ import serial
 
 #Objeto dos Comandos
 
-from app import OPN
+from app.OPN import OPN
 
 #Comandos
 
 commands = [
-	[
-		"A",
-		"OPN",
-		OPN
-	]
+	OPN()
 ]
 
-print(commands[0][2].run())
+# Menu
 
-exit()
+print('==========================================================================')
+print('=   ██████╗███╗   ███╗    ██████╗ ██╗███╗   ██╗██████╗  █████╗ ██████╗   =')
+print('=  ██╔════╝████╗ ████║    ██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██╔══██╗  =')
+print('=  ██║     ██╔████╔██║    ██████╔╝██║██╔██╗ ██║██████╔╝███████║██║  ██║  =')
+print('=  ██║     ██║╚██╔╝██║    ██╔═══╝ ██║██║╚██╗██║██╔═══╝ ██╔══██║██║  ██║  =')
+print('=  ╚██████╗██║ ╚═╝ ██║    ██║     ██║██║ ╚████║██║     ██║  ██║██████╔╝  =')
+print('=   ╚═════╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝╚═════╝   =')
+print('==========================================================================')
 
-#Portal serial
+print('\n')
 
-com = input('Informa a porta serial: ')
+for index, command in enumerate(commands, start = 1):
 
-#Listando portas seriais
+	print('{}) {}'.format(index, command.label))
 
-ser = serial.Serial(com, 9600, timeout=0)
+print('\n')
 
-while True:
+command = int(input('>')) - 1
 
-	cmd = input('>')
+try:
 
-	if(cmd == 'quit'):
-		break
+	command = commands[command]
 
-	message = helper.command(cmd)
+	com = input('Informa a porta serial: ')
 
-	ser.write(message)
-
-	response = bytes()
+	ser = serial.Serial(com, 9600, timeout=0)
 
 	while True:
 
-		try:
+		cmd = input('>')
+
+		if(cmd == 'quit'):
+			break
+
+		message = helper.command(cmd)
+
+		ser.write(message)
+
+		response = bytes()
+
+		while True:
 
 			received = ser.read(2049)
 
@@ -58,9 +69,10 @@ while True:
 
 				break
 
-		except:
+except IndexError:
 
-			print('Algo deu errado!')
-			break
+	print('Comando não encontrado!')
 
-ser.close()
+except:
+
+	print('Algo deu errado!')

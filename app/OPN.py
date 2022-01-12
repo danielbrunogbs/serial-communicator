@@ -4,9 +4,9 @@ class OPN(Command):
 
 	def __init__(self):
 
-		self.id = 'A'
 		self.label = 'OPN'
+		self.abecs = False
 
 	def run(self):
 
-		print('Entrou no processamento')
+		return
