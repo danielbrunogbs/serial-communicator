@@ -1,9 +1,13 @@
 class Command():
 
-	def __init__(self):
+	def __init__(self, children):
+
+		self.children = children
 
 		return
 
-	def crcMessage(self, message):
+	def displayCommand(self):
 
-		print(message)
+		print('\nVocê selecionou o comando {} siga a instruções abaixo.\n'.format(self.children.label))
+
+		return

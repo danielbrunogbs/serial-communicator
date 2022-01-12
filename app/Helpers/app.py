@@ -1,4 +1,6 @@
 import crcmod
+import os
+import json
 
 def crc(string):
 
@@ -16,7 +18,7 @@ def crc(string):
 
 	return CRC
 
-def command(string):
+def message(string):
 
 	SYN = '\x16' #START
 	ETB = '\x17' #END
@@ -27,6 +29,26 @@ def command(string):
 	#string = string.encode('ascii').hex()
 
 	MSG = SYN + string + ETB
-	MSG = bytes.fromhex(MSG.encode('ascii').hex())
+	MSG = bytes.fromhex(MSG.hex())
 
 	return MSG + CRC
+
+def config(value):
+
+	try:
+
+		if not os.path.isfile('config.json'):
+
+			return False
+
+		else:
+
+			config = open('config.json', 'r')
+
+			config = json.loads(config.read())
+
+			return config[value]
+
+	except KeyError:
+
+		return False

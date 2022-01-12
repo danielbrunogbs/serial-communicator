@@ -1,61 +1,68 @@
-import helper
 import serial
+from app.Helpers.app import config
 
 #Objeto dos Comandos
 
 from app.OPN import OPN
+from app.DSP import DSP
+from app.DEX import DEX
 
 #Comandos
 
 commands = [
-	OPN()
+	OPN(),
+	DSP(),
+	DEX()
 ]
 
-# Menu
+#Conexão com a porta serial
 
-print('==========================================================================')
-print('=   ██████╗███╗   ███╗    ██████╗ ██╗███╗   ██╗██████╗  █████╗ ██████╗   =')
-print('=  ██╔════╝████╗ ████║    ██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██╔══██╗  =')
-print('=  ██║     ██╔████╔██║    ██████╔╝██║██╔██╗ ██║██████╔╝███████║██║  ██║  =')
-print('=  ██║     ██║╚██╔╝██║    ██╔═══╝ ██║██║╚██╗██║██╔═══╝ ██╔══██║██║  ██║  =')
-print('=  ╚██████╗██║ ╚═╝ ██║    ██║     ██║██║ ╚████║██║     ██║  ██║██████╔╝  =')
-print('=   ╚═════╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝╚═════╝   =')
-print('==========================================================================')
+port = config('PORT')
 
-print('\n')
+if not port:
 
-for index, command in enumerate(commands, start = 1):
+	port = input('Informe a porta: ')
 
-	print('{}) {}'.format(index, command.label))
-
-print('\n')
-
-command = int(input('>')) - 1
+connect = serial.Serial(port, 9600, timeout=0)
 
 try:
 
-	command = commands[command]
-
-	com = input('Informa a porta serial: ')
-
-	ser = serial.Serial(com, 9600, timeout=0)
-
 	while True:
 
-		cmd = input('>')
+		# Menu
 
-		if(cmd == 'quit'):
-			break
+		print('==========================================================================')
+		print('=   ██████╗███╗   ███╗    ██████╗ ██╗███╗   ██╗██████╗  █████╗ ██████╗   =')
+		print('=  ██╔════╝████╗ ████║    ██╔══██╗██║████╗  ██║██╔══██╗██╔══██╗██╔══██╗  =')
+		print('=  ██║     ██╔████╔██║    ██████╔╝██║██╔██╗ ██║██████╔╝███████║██║  ██║  =')
+		print('=  ██║     ██║╚██╔╝██║    ██╔═══╝ ██║██║╚██╗██║██╔═══╝ ██╔══██║██║  ██║  =')
+		print('=  ╚██████╗██║ ╚═╝ ██║    ██║     ██║██║ ╚████║██║     ██║  ██║██████╔╝  =')
+		print('=   ╚═════╝╚═╝     ╚═╝    ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝╚═════╝   =')
+		print('==========================================================================')
 
-		message = helper.command(cmd)
+		print('\n')
+		print('Selecione o comando que deseja executar.')
+		print('\n')
 
-		ser.write(message)
+		for index, command in enumerate(commands, start = 1):
+
+			print('{}) {}'.format(index, command.label))
+
+		print('\n')
+
+		command = int(input('>')) - 1
+
+		command = commands[command]
+
+		message = command.run()
+
+		connect.write(message)
 
 		response = bytes()
 
 		while True:
 
-			received = ser.read(2049)
+			received = connect.read(2049)
 
 			response += received
 
@@ -63,9 +70,9 @@ try:
 
 			if(search >= 0):
 
-				print('{:3}'.format(response))
-
 				print('<< {}'.format(response))
+
+				print('\n')
 
 				break
 
@@ -73,6 +80,6 @@ except IndexError:
 
 	print('Comando não encontrado!')
 
-except:
+# except:
 
-	print('Algo deu errado!')
+# 	print('Algo de errado não está certo!')

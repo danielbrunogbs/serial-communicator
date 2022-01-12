@@ -1,4 +1,5 @@
 from app.Command import Command
+from app.Helpers.app import message
 
 class OPN(Command):
 
@@ -7,6 +8,8 @@ class OPN(Command):
 		self.label = 'OPN'
 		self.abecs = False
 
+		super().__init__(self)
+
 	def run(self):
 
-		return
+		return message('OPN')
