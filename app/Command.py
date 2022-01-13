@@ -19,30 +19,17 @@ class Command():
 
 	def __crc(self, string):
 
-		# print(string)
-
-		# string = string.decode('utf-8')
-
 		string = string[1:]
-		# string = string[-1:]
-
-		# print(string)
 
 		crc16 = crcmod.predefined.mkCrcFun('xmodem')
 		message = crc16(string)
-		# message = str(hex(message))
 
-		# print(message)
+		hexa = hex(message)
 
-		# crc_l = message[2:][:-2].rjust(2, '0')
-		# crc_r = message[2:][2:].rjust(2, '0')
+		byte1 = int(hexa[2:-2], 16)
+		byte2 = int(hexa[4:], 16)
 
-		# CRC = crc_l + crc_r
-		# CRC = bytes.fromhex(CRC)
-
-		# print(CRC)
-
-		return message
+		return byte1, byte2
 
 	def send(self, command, length, message):
 
@@ -68,18 +55,8 @@ class Command():
 
 		CRC = self.__crc(buffer)
 
-		hexa = hex(CRC)
+		for byte in CRC:
 
-		print(hexa[2:])
+			buffer.append(byte)
 
-		# print(int(CRC / 256))
-		# print(int(CRC % 256))
-
-		# buffer.append()
-		# buffer.append(int(CRC % 256))
-
-		print(buffer)
-
-		exit()
-
-		return
+		return buffer

@@ -1,5 +1,4 @@
 from app.Command import Command
-from app.Helpers.app import message
 
 class DSP(Command):
 
@@ -16,6 +15,4 @@ class DSP(Command):
 
 		display = input('DIGITE O TEXTO: ')
 
-		text = '{}{:03d}{}'.format(self.label, len(display), display)
-
-		return message(text)
+		return super().send(self.label, len(display), display)

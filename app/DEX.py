@@ -1,5 +1,4 @@
 from app.Command import Command
-from app.Helpers.app import message
 
 class DEX(Command):
 

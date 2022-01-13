@@ -7,6 +7,7 @@ from app.OPN import OPN
 from app.DSP import DSP
 from app.DEX import DEX
 from app.GIN import GIN
+from app.MLI import MLI
 
 #Comandos
 
@@ -14,7 +15,8 @@ commands = [
 	OPN(),
 	DSP(),
 	DEX(),
-	GIN()
+	GIN(),
+	MLI()
 ]
 
 #Conexão com a porta serial
@@ -80,6 +82,6 @@ except IndexError:
 
 	print('Comando não encontrado!')
 
-# except:
+except:
 
-# 	print('Algo de errado não está certo!')
+	print('Algo de errado não está certo!')

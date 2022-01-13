@@ -20,10 +20,6 @@ def crc(string):
 
 def message(string):
 
-	print(string)
-
-	exit()
-
 	SYN = '\x16' #START
 	ETB = '\x17' #END
 

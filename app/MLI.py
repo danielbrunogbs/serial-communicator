@@ -1,14 +1,16 @@
 from app.Command import Command
 
-class OPN(Command):
+class MLI(Command):
 
 	def __init__(self):
 
-		self.label = 'OPN'
-		self.abecs = False
+		self.label = 'MLI'
+		self.abecs = True
 
 		super().__init__(self)
 
 	def run(self):
 
-		return super().send(self.label, 0, '')
+		#
+
+		return

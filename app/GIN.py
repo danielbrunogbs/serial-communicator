@@ -1,5 +1,4 @@
 from app.Command import Command
-from app.Helpers.app import message
 
 class GIN(Command):
 
@@ -14,8 +13,6 @@ class GIN(Command):
 
 		super().displayCommand()
 
-		display = input('ESCOLHA 01 OU 02: ')
+		display = input('ESCOLHA AS OPÇÕES ABAIXO:\n\n00 - Informações do PINPAD\n01 - Informações da Bibliotec Abecs\n\n>')
 
-		text = '{}{:03d}{}'.format(self.label, len(display), display)
-
-		return message(text)
+		return super().send(self.label, len(display), display)
